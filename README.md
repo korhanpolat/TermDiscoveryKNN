@@ -16,7 +16,7 @@ The code is developed using Python version 3.6.
 
 ### Cite
 
-Please cite the original paper 
+Please cite the original [paper](https://hal.archives-ouvertes.fr/hal-01947953 "A K-nearest neighbours approach to unsupervised spoken term discovery")
 
 ```
 @INPROCEEDINGS{8639515,
@@ -28,7 +28,7 @@ Please cite the original paper
   doi={10.1109/SLT.2018.8639515}}
 ```
 
-and our paper
+and [our paper](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22 "Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)")
 
 ```
 @InProceedings{10.1007/978-3-030-66096-3_22,
