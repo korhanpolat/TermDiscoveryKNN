@@ -7,7 +7,7 @@ This implementation closely follows the original algorithm that is proposed by T
 
 ### Demo
 
-Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to learn how you can call the module and parameter definitions. The provided [sample data](./data) contains the time series features computed from sign language videos.  
+Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to learn how you can call the module and what each parameter does. The provided [sample data](./data) contains the time series features computed from sign language videos.  
 
 You can feed your own time series features from another domain and tune the parameters for your problem. 
 
