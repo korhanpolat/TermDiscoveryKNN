@@ -6,10 +6,15 @@ This repo is intended for general purpose term (motif) disvovery. Given a set of
 
 This implementation closely follows the original algorithm that is proposed by Thual et. al. in [A K-nearest neighbours approach to unsupervised spoken term discovery](https://hal.archives-ouvertes.fr/hal-01947953). 
 
+### Dependencies
+
+The main dependency is the [FAISS](https://github.com/facebookresearch/faiss) library, which greatly speeds up the KNN search, by utilizing CUDA capable GPU's.  If you don't have a CUDA capable GPU, then you can set `use_gpu`parameter to `False`.  
+
+The other dependencies are common packages such as Numpy, Pandas, Scipy, Numba etc.  
+The code is developed using Python version 3.6.
 
 
-
-## Cite
+### Cite
 
 Please cite the original paper 
 
