@@ -1,15 +1,15 @@
 # TermDiscovery KNN
 
-This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). 
-
-This repo is intended for general purpose term (motif) disvovery. Given a set of feature vector time series, the algorithm outputs pairs of similar segments. 
+This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). Even though we implemented it for discovery of sign language terms, this repo is intended for general purpose term (motif) disvovery. Given a set of feature vector time series, the algorithm outputs pairs of similar segments. 
 
 This implementation closely follows the original algorithm that is proposed by Thual et. al. in [A K-nearest neighbours approach to unsupervised spoken term discovery](https://hal.archives-ouvertes.fr/hal-01947953). 
 
 
 ### Demo
 
-Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to learn how you can call the algorithm. 
+Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to learn how you can call the module and parameter definitions. The provided [sample data](./data) contains the time series features computed from sign language videos.  
+
+You can feed your own time series features from another domain and tune the parameters for your problem. 
 
 ### Dependencies
 
@@ -17,6 +17,10 @@ The main dependency is the [FAISS](https://github.com/facebookresearch/faiss) li
 
 The other dependencies are common packages such as Numpy, Pandas, Scipy, Numba etc.  
 The code is developed using Python version 3.6.
+
+### Notes
+
+You can make use of [Term Discovery Evaluation](https://github.com/korhanpolat/tdev2 "TDE Toolkit") toolkit, if you want to compare discovered pairs to a set of ground truth labels. 
 
 
 ### Cite
