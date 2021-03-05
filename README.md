@@ -20,7 +20,7 @@ The code is developed using Python version 3.6.
 
 ### Notes
 
-You can make use of [Term Discovery Evaluation](https://github.com/korhanpolat/tdev2 "TDE Toolkit") toolkit, if you want to compare discovered pairs to a set of ground truth labels. 
+If you want to compare discovered pairs to a set of ground truth labels, you can make use of [Term Discovery Evaluation](https://github.com/korhanpolat/tdev2 "TDE Toolkit") toolkit. 
 
 
 ### Cite
