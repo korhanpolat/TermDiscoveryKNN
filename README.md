@@ -1,15 +1,17 @@
 # TermDiscovery KNN
 
-This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). Even though we implemented it for discovery of sign language terms, this repo is intended for general purpose term (motif) disvovery. Given a set of feature vector time series, the algorithm outputs pairs of similar segments. 
+This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). Term discovery algorithms aim to find similar repeating segments from an input sequence.  
 
 This implementation closely follows the original algorithm that is proposed by Thual et. al. in [A K-nearest neighbours approach to unsupervised spoken term discovery](https://hal.archives-ouvertes.fr/hal-01947953). 
 
 
-### Demo
+### 
 
-Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to learn how you can call the module and what each parameter does. The provided [sample data](./data) contains the time series features computed from sign language videos.  
+Even though we implemented this algorithm for discovery of sign language terms, this repo is intended for general purpose term (motif) disvovery. Given a set of feature vector sequences, the algorithm outputs pairs of similar segments. The input sequences can be features obtained from speech (MFCC etc), or sign language (skeleton keypoints) or any other type feature that represent a sequence. 
 
-You can feed your own time series features from another domain and tune the parameters for your problem. 
+Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to see how you can call the module. The detailed explanations for each parameter is given in the notebook as well. The provided [sample data](./data) contains the time series features computed from sign language videos. 
+
+You can feed your own time series features from another domain and tune the parameters for your specific problem.  
 
 ### Dependencies
 
