@@ -1,4 +1,4 @@
-from utils.discovery_utils import find_pairwise_overlaps, find_same_match_overlaps, compute_overlap, find_pairwise_overlaps_NMS, find_pairwise_overlaps_NMS_slots
+from utils.overlaps import find_pairwise_overlaps, find_same_match_overlaps, compute_overlap, find_pairwise_overlaps_NMS, find_pairwise_overlaps_NMS_slots
 # from numba import jit, njit
 import numpy as np
 import pandas as pd

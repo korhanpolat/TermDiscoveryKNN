@@ -3,8 +3,11 @@ from os.path import join
 import os
 import sys
 sys.path.append('../')
-from utils.clustering_utils import pickle_load_nodes_clusters, pickle_save_nodes_clusters
-from clustering.comm_detection import run_clustering_Modularity
+
+from clustering.pairwise import run_clustering_pairs
+# from clustering.comm_detection import run_clustering_Modularity
+from utils.helper_fncs import pickle_load_nodes_clusters, pickle_save_nodes_clusters
+
 
 
 def gen_postdisc_name(params):
@@ -15,15 +18,15 @@ def gen_postdisc_name(params):
                 params['cost_thr'], params['peak_thr'], params['modularity_thr'],
                 params['clus_alg'], params['min_cluster_size'])
 
-    if params['method'] == 'zr17':
-        postdisc_name = 'postZR_cost{}_olap{}_dedup{}_edw{}_dtw{}'.format(
-                params['cost_thr'], params['olapthr'], 
-                params['dedupthr'], params['min_ew'], params['dtwth'])
+    # if params['method'] == 'zr17':
+    #     postdisc_name = 'postZR_cost{}_olap{}_dedup{}_edw{}_dtw{}'.format(
+    #             params['cost_thr'], params['olapthr'], 
+    #             params['dedupthr'], params['min_ew'], params['dtwth'])
 
-    if params['method'] == 'custom':
-        postdisc_name = 'post_customclus_cost{}_{}Alg_dedup{}_mix{}'.format(
-                params['cost_thr'], params['clus_alg'], 
-                params['dedupthr'], params['mix_ratio'])
+    # if params['method'] == 'custom':
+    #     postdisc_name = 'post_customclus_cost{}_{}Alg_dedup{}_mix{}'.format(
+    #             params['cost_thr'], params['clus_alg'], 
+    #             params['dedupthr'], params['mix_ratio'])
 
     if params['method'] == 'pairwise':
         postdisc_name = 'postpairwise_cost{}_olap{}'.format(
@@ -53,16 +56,16 @@ def run_clustering(seq_names, matches_df, params):
             nodes_df, clusters_list = run_clustering_Modularity(
                 seq_names, matches_df, params['clustering'])
 
-        if params['clustering']['method'] == 'zr17':
+        # if params['clustering']['method'] == 'zr17':
 
-            nodes_df, clusters_list = run_clustering_ZR(
-                matches_df, params, postdisc_path, postdisc_name)
+        #     nodes_df, clusters_list = run_clustering_ZR(
+        #         matches_df, params, postdisc_path, postdisc_name)
 
-        if params['clustering']['method'] == 'custom':
+        # if params['clustering']['method'] == 'custom':
 
-            os.makedirs(postdisc_path, exist_ok=True)
-            nodes_df, clusters_list = run_custom_clustering(
-                matches_df, params['clustering'])
+        #     os.makedirs(postdisc_path, exist_ok=True)
+        #     nodes_df, clusters_list = run_custom_clustering(
+        #         matches_df, params['clustering'])
 
         if params['clustering']['method'] == 'pairwise':
 

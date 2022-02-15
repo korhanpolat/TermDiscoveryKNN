@@ -3,20 +3,19 @@ import igraph as ig
 from numba import jit, prange
 import sys
 sys.path.append('../')
-from utils.clustering_utils import apply_cost_edge_w, prune_clusters, dedup_clusters
+from shared_methods import apply_cost_edge_w, prune_clusters, dedup_clusters, nodes_starts_from1
 from itertools import combinations
 import pandas as pd
+
 
 def make_symmetric(edges_mat):
 
     edges_mat += edges_mat.T
-
     # return edges_mat
     return np.triu(edges_mat,1)
 
 
 def edges2_vertices(edges_mat):
-
 
     edges_nz = edges_mat.nonzero()
     
@@ -110,20 +109,20 @@ def remove_single_nodes(edges_mat, nodes_to_delete):
     return edges_mat
 
 
-def deduplicate_matches(matches_df, params_clus):
-    # apply cost threshold
-    matches_df = apply_cost_edge_w(matches_df, params_clus['cost_thr'])
-    matches_df = matches_df.sort_values(by='cost').reset_index(drop=True)
-    # convert to arrays for speed
-    fnames, f1f2arr, s1e1s2e2array, wgtharray = matches_to_arrays(matches_df, cols=['cost'])
-    # find indices to remove
-    to_remove = find_pairwise_overlaps_NMS(f1f2arr, s1e1s2e2array, wgtharray, params_clus['olapthr_m'])
-    # find same file overlaps too
-    to_remove[find_same_match_overlaps(f1f2arr, s1e1s2e2array, wgtharray, params_clus['olapthr_m'])] = True
-    # clean the df
-    matches_df.drop(np.nonzero(to_remove)[0], inplace=True)
+# def deduplicate_matches(matches_df, params_clus):
+#     # apply cost threshold
+#     matches_df = apply_cost_edge_w(matches_df, params_clus['cost_thr'])
+#     matches_df = matches_df.sort_values(by='cost').reset_index(drop=True)
+#     # convert to arrays for speed
+#     fnames, f1f2arr, s1e1s2e2array, wgtharray = matches_to_arrays(matches_df, cols=['cost'])
+#     # find indices to remove
+#     to_remove = find_pairwise_overlaps_NMS(f1f2arr, s1e1s2e2array, wgtharray, params_clus['olapthr_m'])
+#     # find same file overlaps too
+#     to_remove[find_same_match_overlaps(f1f2arr, s1e1s2e2array, wgtharray, params_clus['olapthr_m'])] = True
+#     # clean the df
+#     matches_df.drop(np.nonzero(to_remove)[0], inplace=True)
     
-    return matches_df.reset_index()
+#     return matches_df.reset_index()
 
 
 def compute_similarity_profile(matches_df, seq_names):
@@ -418,15 +417,6 @@ def post_disc(seq_names, matches_df, params):
 
     # deduplicate clusters
     clusters_list = dedup_clusters(clusters_list, nodes_df, params['dedupthr'], params['min_cluster_size'])
-
-    return nodes_df, clusters_list
-
-
-def nodes_starts_from1(nodes_df, clusters_list):
-    # ensure the incides start from at least 1
-    nodes_df.index += 1
-    for c,clus in enumerate(clusters_list):
-        clusters_list[c] = list(np.array(clus)+1)
 
     return nodes_df, clusters_list
 

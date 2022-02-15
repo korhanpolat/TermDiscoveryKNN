@@ -6,9 +6,7 @@
         "method": "pairwise",
         "olapthr_m": 0.1
     },
-    "config_file": "/home/korhan/Dropbox/config/config_phoenix.json",
-    "covth": 10,
-    "dataset": "phoenix",
+    "disc_method": "knn",
     "disc": {
         "a": 4,
         "dim_fix": 10,
@@ -24,13 +22,21 @@
         "top_delta": 0.05,
         "use_gpu": true
     },
-    "disc_method": "knn",
+    "eval": {
+        "TDEROOT":"/home/korhan/Desktop/tez/tdev2/tdev2", 
+        "TDESOURCE":"/home/korhan/miniconda3/etc/profile.d/conda.sh", 
+        "njobs":2,
+        "dataset":"phoenix",
+        "config_file": "/home/korhan/Desktop/knn_utd/config/config_phoenix.json"
+        },
     "exp_root": "/home/korhan/Desktop/tez/knn_exps/",
     "feats_root": "/home/korhan/Desktop/tez/dataset/features/",
     "featype": "c3right",
-    "lr": 0.8,
-    "njobs": 2,
-    "patience": 30,
+    "coverage": {
+        "lr": 0.8,
+        "patience": 30,
+        "covth": 10,
+            },
     "tune": {
         "keys": [
             "r",
