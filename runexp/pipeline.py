@@ -68,13 +68,14 @@ def run_matches_discovery(feats_dict, params):
 
 
 def evaluate_discovery(TDEROOT, SOURCE, outdir, jobs=1, dataset='phoenix', seq_names=None, cnf=None):
-    import subprocess
+    import subprocess, sys
+
 
     with open(join(outdir, 'seq_names.txt'), 'w') as f: f.write('\n'.join(seq_names))
 
     # if not os.path.exists(outdir + '/scores.json'):
-
-    cmd = './run_tde.sh {} {} {} {} {} {} {} {}'.format(TDEROOT, outdir, dataset, 
+    os.chdir(sys.path[0])
+    cmd = '../run_tde.sh {} {} {} {} {} {} {} {}'.format(TDEROOT, outdir, dataset, 
                                                         'sdtw', outdir + '/scores.json', 
                                                         jobs, cnf, SOURCE )
     subprocess.call(cmd.split())   
@@ -92,8 +93,7 @@ def evaluate_discovery(TDEROOT, SOURCE, outdir, jobs=1, dataset='phoenix', seq_n
     if 'coverageNS' not in scores.keys(): scores['coverageNS'] = 0.0
     
     return scores
-
-
+    
 
 def discovery_pipeline(feats_dict, params):
     ''' combine discovery, clustering and evaluation in a single function '''
@@ -115,3 +115,121 @@ def discovery_pipeline(feats_dict, params):
     print('*** Coverage: {:.4f}, NED: {:.2f}'.format(scores['coverageNS'], scores['ned']))
     
     return matches_df, nodes_df, clusters_list, scores
+
+
+
+def run_fixed_coverage(feats_dict, pars, covth=10, covmargin=1):
+    ''' runs the discovery_pipeline() by changing the cost threshold, 
+        repeats until coverage is around the desired value (e.g. 10%) 
+        params: 
+            covth (float):      target coverage percentage, 
+                                between 0-100
+            covmargin (float):  acceptable tolerance around coverage,
+                                wrt 0-100 % units
+            patience (int):     max number of runs until coverage is 
+                                within tolerance range
+    '''
+    cov = 0
+    matches_df, nodes_df, clusters_list, scores = [None for x in range(4)]
+
+    if covth is None: covth = pars['coverage']['covth'] 
+
+    if 'covmargin' in pars['coverage'].keys(): 
+        covmargin = pars['coverage']['covmargin']
+    # convert to 1-100 format if covth > 1
+    # if covth>1: covmargin *= 100
+
+    if 'patience' in pars['coverage'].keys(): patience = pars['coverage']['patience']
+    else:    patience = 10
+
+    cnt = 0
+
+    lr = 0.95 # weight for cost threshold update
+    minmatch = 5 # min allowed matches
+
+    cov0 = 0
+    th0 = 0
+    th = pars['clustering']['cost_thr']
+
+    while abs(cov0-covth) > covmargin:
+
+        if (cnt > patience): break
+        # if (th > maxth) : th = maxth
+
+        pars['clustering']['cost_thr'] = th
+        print(pars['clustering']['cost_thr'])
+        matches_df, nodes_df, clusters_list, scores = discovery_pipeline(feats_dict, pars)
+        nmatch = len(matches_df)
+    
+        cov = scores['coverageNS']
+        if (cov == 0) or (cov==cov0):
+            cov += 0.0001
+
+        print('trial {} th:{:.5f} cov:{:.5f} err:{:.5f}'.format(cnt, th,cov,cov-covth))
+        th_new = th0 + lr*((th-th0)*(covth-cov0))/(cov-cov0)
+        cov0=cov; th0=th
+        if (th >= 0.99) and (th_new >= 0.99) and (abs(cov0-covth) > covmargin): 
+            scores['ned'] = 100.0
+            break
+
+        th = max(min(th_new,0.99), minmatch / (nmatch+1))
+        th = min(th,0.99)
+
+        cnt += 1
+        if (cnt % 5 ==0) : lr = lr * 0.8 # lr decay
+
+    return matches_df, nodes_df, clusters_list, scores, pars
+
+
+def gen_expname(params):
+    ''' generate experiment name using parameters '''
+
+#    if 'basename' not in params.keys(): 
+    params['basename'] = '{}_{}_{}'.format(  params['disc_method'], params['CVset'], params['featype'] )
+
+    name = params['basename'] + '_' + '_'.join(['{}{}'.format(k,v) for k,v in params['disc'].items() ])    
+
+    return name
+
+
+def run_exp(feats_dict, params):
+    ''' wraps fixed_coverage experiment, by assigning an experiment name '''
+
+    params['expname'] = gen_expname(params)
+
+    print(params['expname'])
+    thresh0 = params['clustering']['cost_thr']
+    
+    tmp_dict = feats_dict
+    
+    try:
+        matches_df, nodes_df, clusters_list, scores, pars = run_fixed_coverage(
+                                                                tmp_dict, params)
+    except Exception as exc:
+
+        print(traceback.format_exc())
+        print(exc)
+        scores = {'ned':100.0, 'coverageNS': 0.0}
+
+    params['clustering']['cost_thr'] = thresh0
+    
+    return scores, params
+
+
+# def try_run_exp(feats_dict, params, size = 100, step = 20, genname=False):
+
+#     if genname:
+#         params['basename'] = '{}_{}_{}'.format(params['disc_method'], params['CVset'], params['featype'])
+
+#     try:
+
+#         scores = run_exp(feats_dict, params)
+
+#     except Exception as exc:
+
+#         print(traceback.format_exc())
+#         print(exc)
+#         scores = {'ned':100.0, 'coverageNS': 0.0}
+
+#     return scores
+

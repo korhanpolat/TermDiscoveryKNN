@@ -2,7 +2,7 @@ from os.path import join
 import os, sys
 import pandas as pd
 
-from exp.pipeline import evaluate_discovery
+from runexp.pipeline import evaluate_discovery
 
 
 SOURCE = "/home/korhan/miniconda3/etc/profile.d/conda.sh"
