@@ -1,6 +1,6 @@
 # TermDiscovery KNN
 
-This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). 
+This repository contains the code of KNN based term discovery algorithm, implemented for our paper  [Unsupervised discovery of sign terms by K-nearest neighbours approach (ECCV '20)](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper"). It contains the necessary scripts to reproduce the results. Contact me via [LinkedIn](https://www.linkedin.com/in/korhan-polat/) to access the Drive link that contains all the features for OpenPose and DeepHand.
 
 Even though we implemented this algorithm for discovery of sign language terms, this repo is intended for general purpose term (motif) disvovery. Given a set of feature vector sequences, the algorithm outputs pairs of similar segments. The input sequences can be features obtained from speech (MFCC etc), or sign language (skeleton keypoints) or any other type feature that represent a sequence. 
 
@@ -17,17 +17,28 @@ Unsupervised term discovery algorithms aim to find similar repeating segments fr
 
 ## Quick Start
 
-Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to see how you can call the module. The detailed explanations for each parameter is given in the notebook as well. The provided [sample data](./data) contains the time series features computed from sign language videos. 
+Have a look at the [notebook](./notebooks/Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to see how you can call the module. The detailed explanations for each parameter are given in the notebook as well. The provided [sample data](./data/sample) contains the time series features computed from sign language videos. 
 
-You can feed your own time series features from any other domain and tune the parameters for your specific problem.  
+To reproduce the results in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper" ) with the exact parameters, refer to [this notebook](./notebooks/reproduce_results_given_params.ipynb).
+
+If you want to perform cross-validated parameter tuning refer to [this notebook](./notebooks/run_crossval_exp.ipynb).
 
 ### Dependencies
 
 The main dependency is the [FAISS](https://github.com/facebookresearch/faiss) library, which greatly speeds up the KNN search, by utilizing CUDA capable GPU's.  If you don't have a CUDA capable GPU, then you can set `use_gpu`parameter to `False`.  
 
 The other dependencies are common packages such as Numpy, Pandas, Scipy, Numba etc.  
-The code is developed using Python version 3.6.
 
+A working combination on Ubuntu 16 is:
+```
+Python=3.7.4  
+numba              0.54.1             
+numpy              1.18.1  
+faiss              1.7.0 
+pandas             0.24.2 
+scikit-optimize    0.9.0  
+cuda=10.2
+```
 ### Notes
 
 If you want to compare discovered pairs to a set of ground truth labels, you can make use of [Term Discovery Evaluation](https://github.com/korhanpolat/tdev2 "TDE Toolkit") toolkit. 
