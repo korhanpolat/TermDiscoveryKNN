@@ -1,49 +1,54 @@
 {
-    "CVroot": "/home/korhan/Dropbox/CVfolds",
+    "CVroot": "/home/korhan/Desktop/knn_utd/data/CVfolds",
     "CVset": "A",
     "clustering": {
         "cost_thr": 0.01,
         "method": "pairwise",
-        "olapthr_m": 0.1
+        "olapthr_m": 0.5
     },
     "disc_method": "knn",
     "disc": {
-        "a": 4,
-        "dim_fix": 10,
+        "a": 3,
+        "dim_fix": 5,
         "emb_type": "gauss_kernel",
         "k": 150,
-        "lmax": 28,
-        "lmin": 4,
+        "lmax": 11,
+        "lmin": 2,
         "metric": "L2",
         "norm": false,
-        "olapthr_m": 0.1,
+        "olapthr_m": 0.2,
         "pca": "",
+        "r": 0.1,
+        "s": 0.4,
         "seg_type": "uniform",
         "top_delta": 0.05,
         "use_gpu": true
     },
     "eval": {
+        "tderunfile":"/home/korhan/Desktop/knn_utd/run_tde.sh",
         "TDEROOT":"/home/korhan/Desktop/tez/tdev2/tdev2", 
         "TDESOURCE":"/home/korhan/miniconda3/etc/profile.d/conda.sh", 
         "njobs":2,
         "dataset":"phoenix",
         "config_file": "/home/korhan/Desktop/knn_utd/config/config_phoenix.json"
         },
-    "exp_root": "/home/korhan/Desktop/tez/knn_exps/",
-    "feats_root": "/home/korhan/Desktop/tez/dataset/features/",
+    "exp_root": "/home/korhan/Desktop/data/results/",
+    "feats_root": "/home/korhan/Desktop/data/features/",
     "featype": "c3right",
     "coverage": {
-        "lr": 0.8,
         "patience": 30,
         "covth": 10,
+        "covmargin": 1
             },
     "tune": {
         "keys": [
+            "lmax",
+            "dim_fix",
             "r",
             "s"
         ],
+        "chkpoint_root":"/home/korhan/Desktop/knn_utd/data/checkpoints",
         "minimizer": "gp",
-        "n_split": 1,
         "stop_margin": 0.01,
         "stopper_patience": 5
     }

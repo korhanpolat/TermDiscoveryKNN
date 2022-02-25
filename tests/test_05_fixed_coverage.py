@@ -1,4 +1,4 @@
-from runexp.pipeline import run_fixed_coverage
+from run.pipeline import run_fixed_coverage
 import os, sys
 import numpy as np
 from utils.helper_fncs import load_json
@@ -10,7 +10,7 @@ alg_type = 'knn'
 params = load_json('../config/{}.json'.format(alg_type))
 params['expname'] = 'pipeline_test'
 
-feats_dir = '../sample_data/features/phoenix_Signer03_deephand/'
+feats_dir = '../data/sample/features/phoenix_Signer03_deephand/'
 
 feats_dict = {}
 for fname in os.listdir(feats_dir):
@@ -25,6 +25,6 @@ matches_df, nodes_df, clusters_list, scores, _ = run_fixed_coverage(feats_dict, 
 # print(scores)
 
 if abs(scores['coverageNS']-covth) <= covmargin:
-    print('Coverage is within tolerable range')
+    print('Success : Coverage is within tolerable range !')
 else:    
-    print('Coverage is not within tolerable range')
+    print('Fail : Coverage is not within tolerable range !')

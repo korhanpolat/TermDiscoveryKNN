@@ -9,7 +9,7 @@ params = {  "clustering":
                             "olapthr_m": 0.1
                             },
             "expname" : "clus",
-            "exp_root" : os.path.join(sys.path[0] , "..", "sample_data/results")
+            "exp_root" : os.path.join(sys.path[0] , "..", "data/sample/results")
         }
 
 

@@ -6,8 +6,19 @@ from utils.overlaps import compute_overlap
 
 
 def apply_cost_edge_w(matches_df, cost_thr=0.1):
-    # apply threshold to normalized edge weights
+    """ Apply cost threshold to normalized edge weights,
+
+    Args:
+        matches_df (pandas.DataFrame): Pairs of similar segments, 
+            together with dissimilarity score 'cost' column
+        cost_thr (float, optional): Ratio of best matches to retain. Defaults to 0.1.
+
+    Returns:
+        pandas.DataFrame: Thresholded matches.
+    """    
+    
     cost_max = matches_df.cost.max()
+    # convert to normalized similarity scores
     matches_df['edge_w'] = matches_df['cost'].apply(lambda x: (cost_max - x) / cost_max)
     
     cost_val = matches_df['edge_w'].sort_values(ascending=False).values[round(len(matches_df) * cost_thr)]
@@ -27,10 +38,10 @@ def nodes_starts_from1(nodes_df, clusters_list):
 
     
 def prune_clusters(clusters_list_tmp, cluster_thr=2):
-    ''' 
+    """ 
     need to remove singletons after clustering is performed, 
     can also be thresholded to limit min cluster size
-    '''
+    """
 
     clusters_list = []
     excluded_clusters = []
@@ -53,9 +64,9 @@ def prune_clusters(clusters_list_tmp, cluster_thr=2):
 
 
 def dedup_clusters(clusters_list, nodes_df, dedupthr=0.5, minclussize=2):
-    ''' deduplicate inter-cluster segments, 
+    """ deduplicate inter-cluster segments, 
         remove segment if overlaps more than 'dedupthr' with another 
-        segment from the same cluster '''
+        segment from the same cluster """
 
     for c,cluster in enumerate(clusters_list):
         n = 0

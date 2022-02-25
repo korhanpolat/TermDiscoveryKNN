@@ -1,4 +1,4 @@
-from runexp.pipeline import discovery_pipeline
+from run.pipeline import discovery_pipeline
 import os, sys
 import numpy as np
 from utils.helper_fncs import load_json
@@ -10,7 +10,7 @@ alg_type = 'knn'
 params = load_json('../config/{}.json'.format(alg_type))
 params['expname'] = 'pipeline_test'
 
-feats_dir = '../sample_data/features/phoenix_Signer03_deephand/'
+feats_dir = '../data/sample/features/phoenix_Signer03_deephand/'
 
 feats_dict = {}
 for fname in os.listdir(feats_dir):
@@ -21,5 +21,5 @@ for fname in os.listdir(feats_dir):
 
 matches_df, nodes_df, clusters_list, scores = discovery_pipeline(feats_dict, params)
 
-print(scores)
-
+print('Discovery completed !! \nscores:')
+print(' , '.join(['{}:{}'.format(k,scores[k]) for k in ['ned','coverageNS','grouping_F']]))

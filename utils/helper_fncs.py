@@ -40,8 +40,17 @@ def load_json(full_path):
     with open( full_path, 'r') as fp:
         data = json.load(fp)
         return data
-        
+       
 
+def pickle_load_nodes_clusters(postdisc_path):
+    nodes_df = pd.read_pickle(join(postdisc_path,'nodes.pkl'))
+    clusters_list = load_obj(name='clusters', path=postdisc_path)
+    return nodes_df, clusters_list
+
+
+def pickle_save_nodes_clusters(nodes_df, clusters_list, postdisc_path):
+    nodes_df.to_pickle(join(postdisc_path,'nodes.pkl'), protocol=3)
+    save_obj(name='clusters', path=postdisc_path, obj=clusters_list)
         
 
 

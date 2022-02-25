@@ -31,6 +31,13 @@ excluded_labels = [3693, 2370, 2371, 2372, 2385, 2386, 2387]
 excluded_labels = [3693]
 
 
+def get_seq_names(params):
+    with open(join(params['CVroot'], params['CVset'] + '.txt'), 'r') as f: 
+        seq_names = [x.strip('\n') for x in f.readlines()]
+
+    return seq_names
+
+
 def imgs_for_foldername(img_root,folder,img_idx):
 
 #    paths = sorted(listdir( join( img_root, folder, '1')) )

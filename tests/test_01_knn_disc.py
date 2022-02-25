@@ -3,7 +3,7 @@ import os, sys
 import numpy as np
 
 os.chdir(sys.path[0])
-feats_dir = '../sample_data/features/phoenix_Signer03_deephand/'
+feats_dir = '../data/sample/features/phoenix_Signer03_deephand/'
 
 feats_dict = {}
 for fname in os.listdir(feats_dir):

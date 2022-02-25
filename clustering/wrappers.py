@@ -11,7 +11,7 @@ from utils.helper_fncs import pickle_load_nodes_clusters, pickle_save_nodes_clus
 
 
 def gen_postdisc_name(params):
-    ''' generate name for clustering experiment (required for bookkeeping)'''
+    """ generate name for clustering experiment (required for bookkeeping)"""
 
     if params['method'] == 'modularity':
         postdisc_name = 'post_cost{}_peak{}_q{}_{}Alg_mc{}'.format(
@@ -37,7 +37,7 @@ def gen_postdisc_name(params):
 
 
 def run_clustering(seq_names, matches_df, params):
-    # runs the clustering part, if not computed before
+    # runs the clustering part
        
     postdisc_name = gen_postdisc_name(params['clustering'])
     
@@ -48,13 +48,13 @@ def run_clustering(seq_names, matches_df, params):
          
         nodes_df, clusters_list = pickle_load_nodes_clusters(postdisc_path)
 
-    else:
+    else: #  if not computed before
 
-        if params['clustering']['method'] == 'modularity':
+        # if params['clustering']['method'] == 'modularity':
 
-            os.makedirs(postdisc_path, exist_ok=True)
-            nodes_df, clusters_list = run_clustering_Modularity(
-                seq_names, matches_df, params['clustering'])
+        #     os.makedirs(postdisc_path, exist_ok=True)
+        #     nodes_df, clusters_list = run_clustering_Modularity(
+        #         seq_names, matches_df, params['clustering'])
 
         # if params['clustering']['method'] == 'zr17':
 
