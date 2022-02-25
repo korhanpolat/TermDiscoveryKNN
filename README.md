@@ -19,9 +19,12 @@ Unsupervised term discovery algorithms aim to find similar repeating segments fr
 
 Have a look at the [notebook](./notebooks/Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to see how you can call the module. The detailed explanations for each parameter are given in the notebook as well. The provided [sample data](./data/sample) contains the time series features computed from sign language videos. 
 
-To reproduce the results in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper" ) with the exact parameters, refer to [this notebook](./notebooks/reproduce_results_given_params.ipynb).
 
-If you want to perform cross-validated parameter tuning refer to [this notebook](./notebooks/run_crossval_exp.ipynb).
+### Reproducing results
+
+To reproduce the results in the [paper](https://link.springer.com/chapter/10.1007/978-3-030-66096-3_22  "Link to paper" ) with the exact parameters, refer to [this notebook](./notebooks/reproduce_results_given_params.ipynb). Here, the parameters are read from `csv` files provided in `data/paper_results`. 
+
+If you want to perform cross-validated parameter tuning refer to [this notebook](./notebooks/run_crossval_exp.ipynb). You'd need `scikit-optimize` to run this one.
 
 ### Dependencies
 
