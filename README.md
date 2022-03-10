@@ -15,6 +15,10 @@ These common gestures correspond to words in German sign language. If we humans 
 
 Unsupervised term discovery algorithms aim to find similar repeating segments from an input sequence, without any supervision (hence the name *Zero Resource*). This problem has been an active research area in speech processing and there are various algorithms that have competed for the [Zero Resource Speech Challenges](https://www.zerospeech.com/). Our work solves the same problem for sign languages by using visual features instead of speech features. Our implementation closely follows the original algorithm that is proposed by Thual et. al. in [A K-nearest neighbours approach to unsupervised spoken term discovery](https://hal.archives-ouvertes.fr/hal-01947953). 
 
+
+![Algorithm overview](./figs/knn_drawing_flow_EN.pdf "flow")
+
+
 ## Quick Start
 
 Have a look at the [notebook](./Run_KNN_UTD.ipynb "Run_KNN_UTD.ipynb") to see how you can call the module. The detailed explanations for each parameter is given in the notebook as well. The provided [sample data](./data) contains the time series features computed from sign language videos. 
