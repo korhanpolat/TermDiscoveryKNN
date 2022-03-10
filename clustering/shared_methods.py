@@ -29,7 +29,20 @@ def apply_cost_edge_w(matches_df, cost_thr=0.1):
 
 
 def nodes_starts_from1(nodes_df, clusters_list):
-    # ensure the incides start from at least 1
+    """Ensure the incides start from at least 1.
+
+    Args:
+        - nodes_df (pandas.DataFrame): Contains info of all segments
+        - clusters_list (list of lists of int): Each sublist is a cluster and 
+            contains indices of nodes for that cluster
+
+    Returns:
+        tuple containing same as args but indices are made sure to start from 1
+
+        - nodes_df (pandas.DataFrame)
+        - clusters_list (list of lists of int)
+    """    
+    
     nodes_df.index += 1
     for c,clus in enumerate(clusters_list):
         clusters_list[c] = list(np.array(clus)+1)
@@ -38,11 +51,17 @@ def nodes_starts_from1(nodes_df, clusters_list):
 
     
 def prune_clusters(clusters_list_tmp, cluster_thr=2):
-    """ 
-    need to remove singletons after clustering is performed, 
-    can also be thresholded to limit min cluster size
-    """
+    """Remove singletons after clustering is performed, 
+    can also be thresholded to set limit on min cluster size. 
 
+    Args:
+        clusters_list_tmp (list of lists of int): Each sublist is a cluster and 
+            contains indices of nodes for that cluster
+        cluster_thr (int, optional): Limit on min cluster size. Defaults to 2.
+
+    Returns:
+        tuple: clusters list, excluded clusters, included nodes, excluded nodes
+    """    
     clusters_list = []
     excluded_clusters = []
     excluded_nodes = []
@@ -64,10 +83,22 @@ def prune_clusters(clusters_list_tmp, cluster_thr=2):
 
 
 def dedup_clusters(clusters_list, nodes_df, dedupthr=0.5, minclussize=2):
-    """ deduplicate inter-cluster segments, 
-        remove segment if overlaps more than 'dedupthr' with another 
-        segment from the same cluster """
+    """Deduplicate inter-cluster segments.
 
+    Remove segment if it overlaps more than `dedupthr` with another 
+    segment within the same cluster
+
+    Args:
+        clusters_list (list of lists of int): Each sublist is a cluster and 
+            contains indices of nodes for that cluster
+        nodes_df (pandas.DataFrame): Contains info of all segments
+        dedupthr (float, optional): Max allowed overlap ratio. Defaults to 0.5.
+        minclussize (int, optional): Limit on min cluster size.. Defaults to 2.
+
+    Returns:
+        _type_: _description_
+    """  
+     
     for c,cluster in enumerate(clusters_list):
         n = 0
         while n < len(cluster):

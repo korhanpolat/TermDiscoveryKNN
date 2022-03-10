@@ -11,7 +11,14 @@ from utils.helper_fncs import pickle_load_nodes_clusters, pickle_save_nodes_clus
 
 
 def gen_postdisc_name(params):
-    """ generate name for clustering experiment (required for bookkeeping)"""
+    """Generate name for clustering experiment (required for bookkeeping)
+
+    Args:
+        params (dict): Experiment parameters
+
+    Returns:
+        str: Generated name for post-discovery step
+    """    
 
     if params['method'] == 'modularity':
         postdisc_name = 'post_cost{}_peak{}_q{}_{}Alg_mc{}'.format(
@@ -37,7 +44,24 @@ def gen_postdisc_name(params):
 
 
 def run_clustering(seq_names, matches_df, params):
-    # runs the clustering part
+    """Runs the clustering part, selects between differnet methods.
+
+    Also handles loading/saving of cluster info
+
+    Args:
+        seq_names (list of str): Filenames to process, 
+            (you may leave empty if not using community detection algorithm).
+        matches_df (pandas.DataFrame): Pairs of discovered segments, result of discovery step
+        params (dict): Experiment parameters
+
+    Returns:
+        tuple containing:
+
+        - nodes_df (pandas.DataFrame): Contains info of all segments
+        - clusters_list (list of lists of int): Each sublist contains the indices of nodes for that cluster
+        - postdisc_name (str): Name for post-discovery step, required for access to saved objects
+
+    """    
        
     postdisc_name = gen_postdisc_name(params['clustering'])
     
