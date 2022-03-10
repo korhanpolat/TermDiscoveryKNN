@@ -7,12 +7,28 @@ import os
 from copy import deepcopy
 
 def gen_expname(params):
+    """Generate name string from experiment parameters. Required for bookkeeping.
+
+    Args:
+        params (dict): Experiment parameters
+
+    Returns:
+        str: Generated name
+    """
     return '_'.join(['{}_{}'.format(key,v) for key,v in params.items()])
 
 
 
 class KnnDiscovery():
+    """Term discovery using KNN search
+    """    
     def __init__(self, feats_dict, params):
+        """Initializes Knn discovery object
+
+        Args:
+            feats_dict (dict of nd.arrays): Keys are sequence names and values are feature arrays
+            params (dict): Experiment parameters
+        """        
         self.params = deepcopy(params)
         self.index = None
         self.seq_names = list(feats_dict.keys())
@@ -43,6 +59,11 @@ class KnnDiscovery():
         
             
     def run_embed(self, feats_dict):
+        """_summary_
+
+        Args:
+            feats_dict (_type_): _description_
+        """        
         print('Computing Embeddings')
         self.X, self.traceback_info = self.embedder.compute_all_embeddings(
             feats_dict, self.intervals_dict)
